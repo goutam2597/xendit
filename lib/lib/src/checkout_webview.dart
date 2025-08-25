@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:xendit/widgets/custom_app_bar.dart';
 
 /// Minimal WebView wrapper to display Xendit checkout invoice.
 ///
@@ -64,15 +65,21 @@ class _CheckoutWebViewState extends State<CheckoutWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.appBarTitle ?? 'Checkout')),
-      body: Stack(
+      body: Column(
         children: [
-          WebViewWidget(controller: _controller),
-          if (_loading)
-            const Align(
-              alignment: Alignment.topCenter,
-              child: LinearProgressIndicator(minHeight: 2),
+          CustomAppBar(title: widget.appBarTitle ?? ''),
+          Expanded(
+            child: Stack(
+              children: [
+                WebViewWidget(controller: _controller),
+                if (_loading)
+                  const Align(
+                    alignment: Alignment.topCenter,
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
             ),
+          ),
         ],
       ),
     );
