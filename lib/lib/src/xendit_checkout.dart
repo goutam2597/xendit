@@ -25,7 +25,9 @@ class XenditCheckout {
   /// - [externalId] unique external ID for this invoice.
   /// - [payerEmail] payer’s email address.
   /// - [description] short description of the payment.
-  /// - [amount] invoice amount in IDR (integer string, e.g. `'100000'`).
+  /// - [amount] invoice amount as integer string in the currency’s base unit
+  ///   (e.g. `'100000'` for IDR 100,000).
+  /// - [currency] (default `'IDR'`) — e.g. `'IDR'`, `'PHP'` (availability depends on your Xendit account).
   /// - [returnDeepLink] custom URL scheme for redirect back into the app.
   /// - [baseUrl] Xendit base API URL (default `https://api.xendit.co`).
   ///
@@ -38,6 +40,7 @@ class XenditCheckout {
     required String description,
     required String amount,
     required String returnDeepLink,
+    String currency = 'USD',
     String baseUrl = 'https://api.xendit.co',
     String? appBarTitle,
   }) async {
@@ -53,6 +56,7 @@ class XenditCheckout {
         'payer_email': payerEmail,
         'description': description,
         'amount': int.parse(amount),
+        'currency': currency,
         'success_redirect_url': returnDeepLink,
         'failure_redirect_url': returnDeepLink,
       }),
